@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 const ListItem = (props) => {
   return (
-    <TouchableOpacity style={styles.itemInList}>
+    <TouchableOpacity style={styles.row}>
       <View style={styles.imageBox}>
         <Image
           style={styles.image}
@@ -20,29 +20,38 @@ const ListItem = (props) => {
 };
 
 const styles = StyleSheet.create({
-  itemInList: {
+  row: {
     flexDirection: 'row',
+    alignItems: 'center',
     padding: 15,
-    marginBottom: 5,
-    backgroundColor: 'green',
-    borderRadius: 16,
+    marginBottom: 15,
+    backgroundColor: 'mistyrose',
+    margin: 8,
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
+    elevation: 2,
   },
 
   imageBox: {
     flex: 1,
+    borderRadius: 200 / 2,
   },
   image: {
-    flex: 1,
     height: 150,
-    borderRadius: 6,
+    width: 150,
+    borderRadius: 200 / 2,
   },
 
   textBox: {
+    justifyContent: 'center',
     flex: 2,
     padding: 6,
   },
   listTitle: {
     fontWeight: 'bold',
+    color: 'green',
     fontSize: 20,
   },
 });
