@@ -1,18 +1,19 @@
 import React from 'react';
 import {StyleSheet, SafeAreaView, Text, Image} from 'react-native';
 import PropTypes from 'prop-types';
-
-const uploadUrl = 'http://media.mw.metropolia.fi/wbma/uploads/';
+import {uploadUrl} from '../utils/variables';
 
 const Single = ({route}) => {
   const {file} = route.params;
+
   return (
     <SafeAreaView style={styles.container}>
       <Text>{file.title}</Text>
       <Image
-        source={{url: uploadUrl + file.filename}}
-        style={{width: '90%', height: '80%'}}
-        resizeMode="contain"
+        source={{
+          uri: uploadUrl + file.filename,
+        }}
+        style={styles.img}
       />
     </SafeAreaView>
   );
@@ -24,7 +25,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingTop: 40,
+    paddingTop: 15,
+  },
+  img: {
+    width: '90%',
+    height: '90%',
+    resizeMode: 'contain',
   },
 });
 

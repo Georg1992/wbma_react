@@ -1,8 +1,7 @@
 import React from 'react';
 import {View, Text, Image, TouchableOpacity, StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
-
-const uploadsUrl = 'http://media.mw.metropolia.fi/wbma/uploads/';
+import {uploadUrl} from '../utils/variables';
 
 const ListItem = ({navigation, singleMedia}) => {
   return (
@@ -15,7 +14,7 @@ const ListItem = ({navigation, singleMedia}) => {
       <View style={styles.imageBox}>
         <Image
           style={styles.image}
-          source={{uri: uploadsUrl + singleMedia.filename}}
+          source={{uri: uploadUrl + singleMedia.filename}}
         />
       </View>
       <View style={styles.textBox}>

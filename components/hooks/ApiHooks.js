@@ -1,7 +1,8 @@
 import {useEffect, useState} from 'react';
+import {baseUrl} from '../../utils/variables';
 
 // TODO: add necessary imports
-const baseUrl = 'http://media.mw.metropolia.fi/wbma/';
+
 const useLoadMedia = () => {
   // TODO: move mediaArray state here
   const [mediaArray, setMediaArray] = useState([]);
