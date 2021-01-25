@@ -4,18 +4,23 @@ import PropTypes from 'prop-types';
 
 const uploadsUrl = 'http://media.mw.metropolia.fi/wbma/uploads/';
 
-const ListItem = (props) => {
+const ListItem = ({navigation, singleMedia}) => {
   return (
-    <TouchableOpacity style={styles.row}>
+    <TouchableOpacity
+      style={styles.row}
+      onPress={() => {
+        navigation.navigate('Single', {file: singleMedia});
+      }}
+    >
       <View style={styles.imageBox}>
         <Image
           style={styles.image}
-          source={{uri: uploadsUrl + props.singleMedia.filename}}
+          source={{uri: uploadsUrl + singleMedia.filename}}
         />
       </View>
       <View style={styles.textBox}>
-        <Text style={styles.listTitle}> {props.singleMedia.title}</Text>
-        <Text>{props.singleMedia.description}</Text>
+        <Text style={styles.listTitle}> {singleMedia.title}</Text>
+        <Text>{singleMedia.description}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -23,12 +28,10 @@ const ListItem = (props) => {
 
 const styles = StyleSheet.create({
   row: {
-    flexDirection: 'row',
     alignItems: 'center',
     padding: 15,
     marginBottom: 15,
     backgroundColor: 'mistyrose',
-    margin: 8,
     shadowColor: '#000',
     shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.5,
@@ -58,6 +61,9 @@ const styles = StyleSheet.create({
   },
 });
 
-ListItem.propTypes = {singleMedia: PropTypes.object};
+ListItem.propTypes = {
+  singleMedia: PropTypes.object,
+  navigation: PropTypes.object,
+};
 
 export default ListItem;

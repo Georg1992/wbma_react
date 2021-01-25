@@ -24,7 +24,7 @@ const useLoadMedia = () => {
       console.error('loadMedia error', e);
     }
   };
-  // TODO: move useEffect here
+
   useEffect(() => {
     loadMedia(3);
   }, []);
