@@ -24,14 +24,29 @@ const Navigator = () => {
 };
 const TabScreen = () => {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      tabBarOptions={{
+        style: {
+          backgroundColor: '#845EC3',
+          height: 60,
+          width: '100%',
+          paddingBottom: 20,
+          flexDirection: 'column',
+          alignSelf: 'center',
+          elevation: 2,
+        },
+        labelStyle: {
+          color: 'black',
+        },
+      }}
+    >
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
   );
 };
 const StackScreen = () => {
-  const [isLoggedIn] = useContext(MainContext);
+  const {isLoggedIn} = useContext(MainContext);
   return (
     <Stack.Navigator>
       {isLoggedIn ? (

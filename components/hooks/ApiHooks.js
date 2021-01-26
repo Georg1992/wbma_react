@@ -4,9 +4,7 @@ import {baseUrl} from '../../utils/variables';
 // TODO: add necessary imports
 
 const useLoadMedia = () => {
-  // TODO: move mediaArray state here
   const [mediaArray, setMediaArray] = useState([]);
-  // TODO: move loadMedia function here
   const loadMedia = async (limit) => {
     try {
       const listResponse = await fetch(baseUrl + 'media?limit=' + limit);
@@ -32,4 +30,73 @@ const useLoadMedia = () => {
   return mediaArray;
 };
 
+const useLogin = () => {
+  const postLogin = async (userCredentials) => {
+    const options = {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(userCredentials),
+    };
+    try {
+      const response = await fetch(baseUrl + 'login', options);
+      const userData = await response.json();
+      console.log('response status', response.status);
+      console.log('userData', userData);
+      if (response.ok) {
+        return userData;
+      } else {
+        throw new Error(userData.message);
+      }
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  };
+
+  const checkToken = async (token) => {
+    try {
+      const options = {
+        method: 'GET',
+        headers: {'x-access-token': token},
+      };
+      const response = await fetch(baseUrl + 'users/user', options);
+      const userData = response.json();
+      if (response.ok) {
+        return userData;
+      } else {
+        throw new Error(userData.message);
+      }
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  };
+  return {postLogin, checkToken};
+};
+
+const useRegister = () => {
+  const postRegister = async (inputs) => {
+    const fetchOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(inputs),
+    };
+    try {
+      const response = await fetch(baseUrl + 'users', fetchOptions);
+      const json = await response.json();
+      if (response.ok) {
+        return json;
+      } else {
+        throw new Error(json.message);
+      }
+    } catch (e) {
+      console.log('ApiHooks register', e.message);
+      throw new Error(e.message);
+    }
+  };
+  return {postRegister};
+};
+
 export {useLoadMedia};
+export {useLogin};
+export {useRegister};
