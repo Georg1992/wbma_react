@@ -1,7 +1,13 @@
 import {useEffect, useState} from 'react';
 import {baseUrl} from '../../utils/variables';
 
-// TODO: add necessary imports
+const doFetch = async (url, options = {}) => {
+  const response = await fetch(url, options);
+  if (!response.ok) {
+    throw new Error('doFetch failed');
+  }
+  return await response.json();
+};
 
 const useLoadMedia = () => {
   const [mediaArray, setMediaArray] = useState([]);
@@ -23,7 +29,6 @@ const useLoadMedia = () => {
       console.error('loadMedia error', e);
     }
   };
-
   useEffect(() => {
     loadMedia(3);
   }, []);
@@ -38,17 +43,30 @@ const useLogin = () => {
       body: JSON.stringify(userCredentials),
     };
     try {
-      const response = await fetch(baseUrl + 'login', options);
-      const userData = await response.json();
-      console.log('response status', response.status);
-      console.log('userData', userData);
-      if (response.ok) {
-        return userData;
-      } else {
-        throw new Error(userData.message);
-      }
+      const userData = await doFetch(baseUrl + 'login', options);
+      return userData;
     } catch (error) {
       throw new Error(error.message);
+    }
+  };
+  return {postLogin};
+};
+
+const useUser = () => {
+  const postRegister = async (inputs) => {
+    const fetchOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(inputs),
+    };
+    try {
+      const userData = await doFetch(baseUrl + 'users', fetchOptions);
+      return userData;
+    } catch (e) {
+      console.log('ApiHooks register', e.message);
+      throw new Error(e.message);
     }
   };
 
@@ -69,34 +87,19 @@ const useLogin = () => {
       throw new Error(error.message);
     }
   };
-  return {postLogin, checkToken};
+  return {postRegister, checkToken};
 };
 
-const useRegister = () => {
-  const postRegister = async (inputs) => {
-    const fetchOptions = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(inputs),
-    };
+const useTag = () => {
+  const getAvatar = async (userID) => {
     try {
-      const response = await fetch(baseUrl + 'users', fetchOptions);
-      const json = await response.json();
-      if (response.ok) {
-        return json;
-      } else {
-        throw new Error(json.message);
-      }
+      const avatarList = await doFetch(baseUrl + 'tags/avatar_' + userID);
+      return avatarList;
     } catch (e) {
-      console.log('ApiHooks register', e.message);
       throw new Error(e.message);
     }
   };
-  return {postRegister};
+  return {getAvatar};
 };
 
-export {useLoadMedia};
-export {useLogin};
-export {useRegister};
+export {useLoadMedia, useLogin, useUser, useTag};

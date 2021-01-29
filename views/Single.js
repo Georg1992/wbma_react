@@ -1,21 +1,23 @@
 import React from 'react';
-import {StyleSheet, SafeAreaView, Text, Image} from 'react-native';
+import {StyleSheet, ActivityIndicator} from 'react-native';
 import PropTypes from 'prop-types';
 import {uploadUrl} from '../utils/variables';
+import {Card} from 'react-native-elements';
 
 const Single = ({route}) => {
   const {file} = route.params;
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Text>{file.title}</Text>
-      <Image
+    <Card style={styles.container}>
+      <Card.Title>{file.title}</Card.Title>
+      <Card.Image
         source={{
           uri: uploadUrl + file.filename,
         }}
         style={styles.img}
+        PlaceholderContent={<ActivityIndicator />}
       />
-    </SafeAreaView>
+    </Card>
   );
 };
 
@@ -28,8 +30,8 @@ const styles = StyleSheet.create({
     paddingTop: 15,
   },
   img: {
-    width: '90%',
-    height: '90%',
+    width: 200,
+    height: 200,
     resizeMode: 'contain',
   },
 });
